@@ -33,6 +33,7 @@ resource "aws_instance" "red_team" {
   subnet_id                   = module.vpc.public_subnets[0]
   vpc_security_group_ids      = [module.ssh_sg.security_group_id]
   associate_public_ip_address = true
+  user_data                   = templatefile("red_team.sh", { index = count.index })
 
   tags = {
     Name = "Red Team"
@@ -52,6 +53,7 @@ resource "aws_instance" "blue_team" {
   subnet_id                   = module.vpc.public_subnets[1]
   vpc_security_group_ids      = [module.internal_sg.security_group_id]
   associate_public_ip_address = true
+  user_data                   = file("blue_team.sh")
 
   tags = {
     Name = "Blue Team"
