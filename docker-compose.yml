@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # HTTP Web Server (Apache)
+  http:
+    image: httpd:2.4
+    container_name: http-service
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./http_data:/usr/local/apache2/htdocs
+    restart: unless-stopped
+    networks:
+      - services-network
+
+  # FTP Server (Alpine FTP Server)
+  ftp:
+    image: delfer/alpine-ftp-server:latest
+    container_name: ftp-service
+    ports:
+      - "21:21"
+    environment:
+      - USERS=ftpuser|ftppass|1001|1001|/home/ftpuser
+      - ADDRESS=0.0.0.0
+      - MIN_PORT=30000
+      - MAX_PORT=30009
+    volumes:
+      - ./ftp_data:/home/ftpuser
+    restart: unless-stopped
+    networks:
+      - services-network
+
+  # SMTP Server (Postfix)
+  smtp:
+    image: boky/postfix:latest
+    container_name: smtp-service
+    ports:
+      - "25:25"
+      - "587:587"
+    environment:
+      - ALLOWED_SENDER_DOMAINS=localhost
+      - HOSTNAME=localhost
+    restart: unless-stopped
+    networks:
+      - services-network
+
+  # IMAP Server (Dovecot)
+  imap_pop3:
+    image: dovecot/dovecot:latest
+    container_name: imap-pop3-service
+    ports:
+      - "143:143"
+      - "993:993"
+      - "110:110"
+      - "995:995"
+    volumes:
+      - ./mail_data:/var/mail
+    restart: unless-stopped
+    networks:
+      - services-network
+
+networks:
+  services-network:
+    driver: bridge
