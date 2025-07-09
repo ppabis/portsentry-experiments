@@ -25,7 +25,7 @@ resource "aws_key_pair" "ssh_key" {
 
 # Red Team instance (with SSH access)
 resource "aws_instance" "red_team" {
-  count = 1
+  count = 2
 
   ami                         = data.aws_ami.debian_bookworm.id
   instance_type               = "t4g.nano"
