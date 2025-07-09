@@ -1,3 +1,13 @@
+variable "red_team_count" {
+  type    = number
+  default = 2
+}
+
+variable "key_path" {
+  type    = string
+  default = "~/.ssh/id_ed25519.pub"
+}
+
 data "aws_ami" "debian_bookworm" {
   most_recent = true
   owners      = ["amazon"] # Debian official account
@@ -20,12 +30,12 @@ data "aws_ami" "debian_bookworm" {
 
 resource "aws_key_pair" "ssh_key" {
   key_name   = "portsentry-key"
-  public_key = file("~/.ssh/id_ed25519.pub")
+  public_key = file(var.key_path)
 }
 
 # Red Team instance (with SSH access)
 resource "aws_instance" "red_team" {
-  count = 2
+  count = var.red_team_count
 
   ami                         = data.aws_ami.debian_bookworm.id
   instance_type               = "t4g.nano"
