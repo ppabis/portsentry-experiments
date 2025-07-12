@@ -8,7 +8,7 @@ NACL_ID = "acl-0123456789abcdef0"
 
 def parse_args():
     parser = argparse.ArgumentParser( description="Add a deny ingress rule for a single IPv4 address to the configured AWS Network ACL." )
-    parser.add_argument( "ip", help="IPv4 address to block (e.g., 203.0.113.15)", type=str, required=True )
+    parser.add_argument( "ip", help="IPv4 address to block (e.g., 203.0.113.15)", type=str )
     args = parser.parse_args()
     if not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", args.ip):
         print("Invalid IP address", file=sys.stderr)
