@@ -64,6 +64,7 @@ resource "aws_instance" "blue_team" {
   vpc_security_group_ids      = [module.internal_sg.security_group_id]
   associate_public_ip_address = true
   user_data                   = file("blue_team.sh")
+  iam_instance_profile        = aws_iam_instance_profile.blue_team.name
 
   tags = {
     Name = "Blue Team"
