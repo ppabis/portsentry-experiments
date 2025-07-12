@@ -15,3 +15,8 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 apt update
 apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 systemctl enable --now docker
+
+# Script to block IPs via AWS Network ACL
+apt install python3-boto3 -y
+curl -L "https://raw.githubusercontent.com/ppabis/portsentry-experiments/refs/heads/main/block_via_nacl.py" -o /usr/local/bin/block_via_nacl.py
+chmod +x /usr/local/bin/block_via_nacl.py
