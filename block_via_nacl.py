@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-import argparse, sys, re, boto3
+import argparse, sys, re, boto3, os
 
 # Replace this with your actual ACL ID.
 NACL_ID = "acl-0123456789abcdef0"
+REGION = os.environ.get("AWS_DEFAULT_REGION", "eu-west-2") # If using Debian, set to your region, if Amazon Linux, you can leave it as is
 
 
 def parse_args():
@@ -46,7 +47,7 @@ def find_space_for_rule(nacl):
 def main():
     args = parse_args()
     cidr_block = f"{args.ip}/32"
-    ec2 = boto3.client("ec2")
+    ec2 = boto3.client("ec2", region_name=REGION)
 
     acl = get_nacl(ec2)
     if not acl:
