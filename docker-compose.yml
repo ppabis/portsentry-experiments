@@ -21,7 +21,7 @@ services:
     ports:
       - "21:21"
     environment:
-      - USERS=ftpuser|ftppass|1001|1001|/home/ftpuser
+      - USERS=ftpuser|ftppass|/home/ftpuser|1001|1001
       - ADDRESS=0.0.0.0
       - MIN_PORT=30000
       - MAX_PORT=30009
@@ -50,10 +50,10 @@ services:
     image: dovecot/dovecot:latest
     container_name: imap-pop3-service
     ports:
-      - "143:143"
-      - "993:993"
-      - "110:110"
-      - "995:995"
+      - "143:31143"
+      - "993:31993"
+      - "110:31110"
+      - "995:31995"
     volumes:
       - ./mail_data:/var/mail
     restart: unless-stopped
