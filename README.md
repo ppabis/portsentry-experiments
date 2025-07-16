@@ -7,6 +7,7 @@ other Telnet, FTP clients and Nmap.
 
 Read more on my blog here:
 
+- [https://dev.to/aws-builders/protect-your-instances-from-attackers-install-portsentry-2le4](https://dev.to/aws-builders/protect-your-instances-from-attackers-install-portsentry-2le4)
 - [https://pabis.eu/blog/2025-07-16-Protect-Instance-With-Portsentry.html](https://pabis.eu/blog/2025-07-16-Protect-Instance-With-Portsentry.html)
 
 The first instance is Blue Team - configure it to be protected from the second
